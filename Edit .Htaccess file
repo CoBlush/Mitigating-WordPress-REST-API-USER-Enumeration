@@ -1,7 +1,31 @@
-
+<h1> Fix for removing non authenticated access to virtual endpoints</h1>
+<p> Add this block to the .htaccess file </p>
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_URI} ^/wp-json/wp/v2/users [OR]
     RewriteCond %{REQUEST_URI} ^/wp-json/oembed/1.0/embed
     RewriteRule .* - [F,L]
 </IfModule>
+
+Explanation:
+<IfModule mod_rewrite.c>:
+This checks if the Apache mod_rewrite module is available. mod_rewrite is used for rewriting URLs, and the block inside this condition will only run if it's installed and enabled.
+
+RewriteEngine On:
+This command enables the URL rewriting engine, allowing the server to rewrite incoming requests based on the rules you define.
+
+RewriteCond %{REQUEST_URI} ^/wp-json/wp/v2/users [OR]:
+This is a condition that checks the incoming request URI. If the URI matches /wp-json/wp/v2/users, it triggers the rule. The [OR] at the end means this condition will be combined with the next one using a logical OR, meaning if either condition is met, the rule will be applied.
+
+RewriteCond %{REQUEST_URI} ^/wp-json/oembed/1.0/embed:
+This is the second condition, checking if the URI matches /wp-json/oembed/1.0/embed. This endpoint is used to embed WordPress content, and blocking it can help secure oEmbed API requests.
+
+RewriteRule .* - [F,L]:
+This is the rule applied when the conditions are met:
+
+.*: Matches any requested resource (wildcard).
+-: Tells the server not to rewrite the URL, just apply the rule.
+[F]: Returns a 403 Forbidden status code, denying access.
+[L]: Marks this as the last rule, preventing any further rules from being applied to the request.
+Summary:
+This .htaccess block denies access to the /wp-json/wp/v2/users and /wp-json/oembed/1.0/embed endpoints by returning a 403 Forbidden error, securing your site from public access to those APIs.
