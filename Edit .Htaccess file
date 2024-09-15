@@ -1,12 +1,13 @@
 <h1> Fix for removing non authenticated access to virtual endpoints</h1>
 <p> Add this block to the .htaccess file </p>
-<IfModule mod_rewrite.c>
+<p><IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_URI} ^/wp-json/wp/v2/users [OR]
     RewriteCond %{REQUEST_URI} ^/wp-json/oembed/1.0/embed
     RewriteRule .* - [F,L]
 </IfModule>
-
+</p>
+<body>
 Explanation:
 <IfModule mod_rewrite.c>:
 This checks if the Apache mod_rewrite module is available. mod_rewrite is used for rewriting URLs, and the block inside this condition will only run if it's installed and enabled.
@@ -29,3 +30,4 @@ This is the rule applied when the conditions are met:
 [L]: Marks this as the last rule, preventing any further rules from being applied to the request.
 Summary:
 This .htaccess block denies access to the /wp-json/wp/v2/users and /wp-json/oembed/1.0/embed endpoints by returning a 403 Forbidden error, securing your site from public access to those APIs.
+</body>
