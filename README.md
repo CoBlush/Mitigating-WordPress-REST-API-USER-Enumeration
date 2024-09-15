@@ -15,5 +15,5 @@
 &lt;/IfModule&gt;
 </code></pre>
 
-<P> See <br><a href= "https://github.com/CoBlush/Mitigating-WordPress-REST-API-USER-Enumeration/blob/main/Explanation%20.pdf"> "Eplanation.pdf"</a> <br> for configuration breakdown</P>
+<P> See <a href= "https://github.com/CoBlush/Mitigating-WordPress-REST-API-USER-Enumeration/blob/main/Explanation%20.pdf"> "Eplanation.pdf"</a>  for configuration breakdown</P>
 
